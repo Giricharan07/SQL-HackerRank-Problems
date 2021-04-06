@@ -137,3 +137,100 @@ So, the regular expression for this problem is ‘^[^aeiou]|[^aeiou]$’.
 11.Query the list of CITY names from STATION that do not start with vowels and do not end with vowels. Your result cannot contain duplicates.
 
 Solution:   SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '^[^AEIOU].*[^AEIOU]$'
+
+
+## Higher Than 75 Marks
+
+1. Query the Name of any student in STUDENTS who scored higher than  Marks. Order your output by the last three characters of each name.
+   If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending ID.
+   
+Input Format:
+The STUDENTS table is described as follows:
+
+Column	Type
+ID	Integer
+Name	String
+Marks	Integer
+The Name column only contains uppercase (A-Z) and lowercase (a-z) letters.
+
+Analysis:
+query student names ==> SELECT Name
+from STUDENTS table ==> FROM STUDENTS
+score higher than 75 Marks ==> WHERE Marks > 75
+order output by last three characters of name ==> ORDER BY RIGHT(Name, 3)
+secondary sort by ascending ID ==> ORDER BY RIGHT(Name, 3), ID.
+
+Solution:SELECT NAME FROM STUDENTS WHERE MARKS > 75 ORDER BY RIGHT(NAME,3),ID
+
+## Employee Names
+
+1. Write a query that prints a list of employee names (i.e.: the name attribute) from the Employee table in alphabetical order.
+
+Input Format:
+The Employee table containing employee data for a company is described as follows:
+
+Column	Type
+employee_id	Integer
+name	String
+months	Integer
+salary	Integer
+where employee_id is an employee’s ID number, name is their name, months is the total number of months they’ve been working for the company,
+and salary is their monthly salary.
+
+Solution:   SELECT NAME FROM EMPLOYEE ORDER BY NAME;
+
+2. Write a query that prints a list of employee names (i.e.: the name attribute) for employees in Employee
+having a salary greater than 2000 per month who have been employees for less than 10 months. Sort your result by ascending employee_id.
+
+Solution:  SELECT NAME FROM EMPLOYEE WHERE SALARY > 2000 AND MONTHS < 10 ORDER BY EMPLOYEE_ID;
+
+3.  Samantha was tasked with calculating the average monthly salaries for all employees in the EMPLOYEES table, 
+but did not realize her keyboard’s 0 key was broken until after completing the calculation. 
+She wants your help finding the difference between her miscalculation (using salaries with any zeroes removed), and the actual average salary.
+
+Write a query calculating the amount of error (i.e.: actual - miscalculated average monthly salaries), and round it up to the next integer.
+
+Solution:  SELECT CEIL(AVG(Salary) - AVG(REPLACE(Salary, '0', ''))) FROM EMPLOYEES;
+Analysis:
+We can use REPLACE() function to solve the problem. The syntax is ‘REPLACE(str, from_str, to_str)’ and
+it returns the string str with all occurrences of the string from_str replaced by the string to_str.
+
+actual average monthly salaries ==> AVG(Salary)
+salary without zeros ==> REPLACE(Salary, ‘0’, ‘’)
+miscalculated average monthly salaries ==> AVG(REPLACE(Salary, ‘0’, ‘’))
+difference between actual and miscalculated average salaries ==>
+SELECT AVG(Salary) - AVG(REPLACE(Salary, ‘0’, ‘’))
+round the difference up to next integer ==>
+SELECT CEIL(AVG(Salary) - AVG(REPLACE(Salary, ‘0’, ‘’)))
+from EMPLOYEES table ==> FROM EMPLOYEES
+
+
+## Revising Aggregations - Averages
+
+1.Query the average population of all cities in CITY where District is California.
+
+Input Format
+The CITY table is described as follows:
+
+CITY
+Field	Type
+ID	NUMBER
+NAME	VARCHAR2(17)
+COUNTRYCODE	VARCHAR2(3)
+DISTRICT	VARCHAR2(20)
+POPULATION	NUMBER
+
+Solution:   SELECT AVG(POPULATION) FROM CITY WHERE DISTRICT = 'California';
+
+2.  Query the average population for all cities in CITY, rounded down to the nearest integer.
+
+Solution:   SELECT Round(AVG(POPULATION)) FROM CITY;
+
+3.  Query the sum of the populations for all Japanese cities in CITY. The COUNTRYCODE for Japan is JPN.
+
+Solution:   SELECT SUM(POPULATION) FROM CITY WHERE COUNTRYCODE='JPN';
+
+4.  Query the difference between the maximum and minimum populations in CITY.
+
+Solution:   SELECT MAX(POPULATION)-MIN(POPULATION) FROM CITY;
+
