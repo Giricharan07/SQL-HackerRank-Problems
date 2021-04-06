@@ -1,0 +1,139 @@
+# SQL-HackerRank-Problems
+
+1. Query all columns for all American cities in the CITY table with populations larger than 100000. The CountryCode for America is USA.
+
+The CITY table is described as follows:
+
+Field	          Type
+ID	            NUMBER
+NAME	          VARCHAR2(17)
+COUNTRY CODE	  VARCHAR2(3)
+DISTRICT	      VARCHAR2(20)
+POPULATION	    NUMBER
+
+Solution:
+SELECT * FROM CITY WHERE COUNTRYCODE = 'USA' AND POPULATION > 100000;
+
+
+2. Query the NAME field for all American cities in the CITY table with populations larger than 120000. The CountryCode for America is USA.
+
+Solution:   SELECT NAME FROM CITY WHERE COUNTRYCODE = 'USA' AND POPULATION > 120000;
+
+3. Query all columns (attributes) for every row in the CITY table.
+
+Solution:   SELECT * FROM CITY;
+
+4. Query all columns for a city in CITY with the ID 1661.
+
+Solution:   SELECT * FROM CITY WHERE ID = '1661';
+
+5. Query all attributes of every Japanese city in the CITY table. The COUNTRYCODE for Japan is JPN.
+
+Solution:   SELECT * FROM CITY WHERE COUNTRYCODE='JPN'
+
+6. Query the names of all the Japanese cities in the CITY table. The COUNTRYCODE for Japan is JPN.
+
+Solution:   SELECT NAME FROM CITY WHERE COUNTRYCODE = 'JPN'
+
+
+
+###Weather Observation Station 1
+
+1. Query a list of CITY and STATE from STATION.
+
+Input Format
+
+The STATION table is described as follows:
+
+Field	    Type
+ID	      NUMBER
+CITY	    VARCHAR2(21)
+STATE	    VARCHAR2(2)
+LAT_N	    NUMBER
+LONG_W	  NUMBER
+
+Solution:   SELECT CITY,STATE FROM STATION
+
+2. Query a list of CITY names from STATION for cities that have an even ID number. Print the results in any order, but exclude duplicates from the answer.
+
+Solution:   SELECT DISTINCT CITY FROM STATION WHERE ID % 2 = 0;
+
+3. Find the difference between the total number of CITY entries in the table and the number of distinct CITY entries in the table.
+
+Solution:   SELECT COUNT(CITY)-COUNT(DISTINCT CITY) FROM STATION
+
+4. Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name).
+If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
+where LAT_N is the northern latitude and LONG_W is the western longitude.
+
+Sample Input:
+Let's say that CITY only has four entries: DEF, ABC, PQRS and WXY
+
+Sample Output:
+ABC 3
+PQRS 4
+
+Explanation:
+When ordered alphabetically, the CITY names are listed as ABC, DEF, PQRS, and WXY, with the respective lengths 3,3,4,3,3,4, and 33. 
+The longest-named city is obviously PQRS, but there are 33 options for shortest-named city; we choose ABC, because it comes first alphabetically.
+
+Solution:   SELECT CITY, LENGTH(CITY) FROM STATION ORDER BY LENGTH(CITY), CITY LIMIT 1;
+            SELECT CITY, LENGTH(CITY) FROM STATION ORDER BY LENGTH(CITY) DESC, CITY LIMIT 1;
+            
+5. Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
+
+Solution:   SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '^[A,E,I,O,U]';
+Analysis:
+query CITY names ==> SELECT CITY
+from STATION table ==> FROM STATION
+starting with vowels ==> WHERE CITY REGEXP ‘^[A,E,I,O,U]’
+cannot contain duplicates ==> SELECT DISTINCT CITY
+
+6. Query the list of CITY names ending with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.
+
+Solution:   	
+SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '[A,E,I,O,U]$';
+Analysis:
+query CITY names ==> SELECT CITY
+from STATION table ==> FROM STATION
+ending with vowels ==> WHERE CITY REGEXP ‘[aeiou]$’
+cannot contain duplicates ==> SELECT DISTINCT CITY
+
+7. Query the list of CITY names from STATION which have vowels (i.e., a, e, i, o, and u) as both their first and last characters. Your result cannot contain duplicates.
+
+Solution:   SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '^[A,E,I,O,U].*[A,E,I,O,U]$'; 
+
+Explination: The regular expression for city names having vowels as both their first and last characters is ‘^[aeiou].*[aeiou]$’. 
+ ‘^[aeiou]’ means first character is one of vowels and ‘[aeiou]$’ means the string ends with vowels.
+ ‘.*’ can represent any numbers of any characters.
+ 
+ 
+8.  Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.
+
+Solution:   SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '^[^A,E,I,O,U]';
+Analysis:
+query CITY names ==> SELECT CITY
+from STATION table ==> FROM STATION
+do not start with vowels ==> WHERE CITY REGEXP ‘^[^aeiou]’
+do not contain duplicates ==> SELECT DISTINCT CITY
+
+9. Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
+
+Solution:   	SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '[^aeiou]$';
+Analysis:
+query CITY names ==> SELECT CITY
+from STATION table ==> FROM STATION
+do not end with vowels ==> WHERE CITY REGEXP ‘[^aeiou]$’
+do not contain duplicates ==> SELECT DISTINCT CITY
+
+10. Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
+
+Solution:   SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '^[^AEIOU]|[^AEIOU]$';
+Analysis:
+Use regular expressions to filter city names. Regular expression for city names that do not start with vowels is ‘^[^aeiou]’ and 
+expression for names do not end with vowels is ‘[^aeiou]$’.
+So, the regular expression for this problem is ‘^[^aeiou]|[^aeiou]$’.
+
+11.Query the list of CITY names from STATION that do not start with vowels and do not end with vowels. Your result cannot contain duplicates.
+
+Solution:   SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP '^[^AEIOU].*[^AEIOU]$'
